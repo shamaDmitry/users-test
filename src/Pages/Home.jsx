@@ -3,11 +3,9 @@ import BasicLayout from '../Layouts/BasicLayout'
 
 const Home = () => {
   return (
-    <BasicLayout>
-      <div>
-        Home
-      </div>
-    </BasicLayout>
+    <div className='container mx-auto'>
+      Home
+    </div>
   );
 }
 

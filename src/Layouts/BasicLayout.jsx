@@ -1,12 +1,17 @@
 import React from 'react';
 import Navigation from '../Components/Navigation';
+import Footer from '../Components/Footer';
 
-const BasicLayout = ({ children }) => {
+import { Outlet } from 'react-router-dom';
+
+const BasicLayout = () => {
   return (
-    <div className="container px-3 mx-auto">
+    <div className="min-h-screen flex flex-col">
       <Navigation />
 
-      {children}
+      <Outlet />
+
+      <Footer />
     </div>
   );
 }

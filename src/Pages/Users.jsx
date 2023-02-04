@@ -12,7 +12,7 @@ const Users = () => {
   const { data, error, isLoading } = useSWR(`${API_URL}?query=${query}`, fetcher)
 
   return (
-    <BasicLayout>
+    <div className="container mx-auto">
       {isLoading ? <Loader className="animate-spin w-10 mx-auto text-blue-900" /> : null}
 
       <div className="flex justify-end my-6">
@@ -29,8 +29,7 @@ const Users = () => {
           )
         })}
       </div>
-
-    </BasicLayout>
+    </div>
   );
 }
 

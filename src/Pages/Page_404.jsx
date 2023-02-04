@@ -8,7 +8,7 @@ const Page_404 = () => {
         404
       </h1>
 
-      <NavLink to={'/'} className="py-2 px-4 font-medium text-2xl hover:bg-red-300 transition-all rounded-[10px]">
+      <NavLink to={'/home'} className="py-2 px-4 font-medium text-2xl hover:bg-red-300 transition-all rounded-[10px]">
         Back Home
       </NavLink>
     </div>

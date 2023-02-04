@@ -1,22 +1,35 @@
 import React from 'react';
-import BasicLayout from '../Layouts/BasicLayout';
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
+
 
 const UserDetails = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const {
+    first_name,
+    last_name,
+    position,
+    _type
+  } = location.state;
 
   return (
-    <BasicLayout>
+    <div className="container mx-auto">
       <button
         className="border px-4 py-1 rounded-md text-sm font-bold capitalize"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate('/users')}
       >
         back
       </button>
       <h1>
-        User details
+        User details:
       </h1>
-    </BasicLayout>
+      <ul>
+        <li>{first_name}</li>
+        <li>{last_name}</li>
+        <li>{position}</li>
+        <li>{_type}</li>
+      </ul>
+    </div>
   );
 }
 

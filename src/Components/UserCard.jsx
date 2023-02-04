@@ -11,7 +11,7 @@ const UserCard = ({ data }) => {
 
   const handleCardClick = (user) => (event) => {
     navigate(`/users/${user._id}`, {
-      user
+      state: user
     });
   }
 
