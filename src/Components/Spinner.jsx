@@ -1,4 +1,4 @@
-const Loader = (props) => {
+const Spinner = (props) => {
   const { className } = props
 
   return (
@@ -9,4 +9,4 @@ const Loader = (props) => {
   );
 }
 
-export default Loader;
+export default Spinner;

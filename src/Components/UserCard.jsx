@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 
+const colors = ['red', 'green', 'blue', 'orange', 'yellow'];
+
 const UserCard = ({ data }) => {
   const { first_name, last_name, position } = data;
   const navigate = useNavigate();
@@ -10,17 +12,37 @@ const UserCard = ({ data }) => {
   }, [first_name, last_name]);
 
   const handleCardClick = (user) => (event) => {
-    navigate(`/users/${user._id}`, {
-      state: user
-    });
+    navigate(`/users/${user._id}`);
   }
 
   return (
     <div
-      className="border px-4 py-4 inline-flex flex-col items-center cursor-pointer hover:shadow-xl transition-all"
+      className="relative border px-4 py-4 inline-flex flex-col items-center cursor-pointer hover:shadow-xl transition-all"
       onClick={handleCardClick(data)}
     >
-      <div className="rounded-full mb-2 h-[50px] w-[50px] bg-red-500 flex items-center justify-center text-white font-bold">
+      <div className="absolute top-2 right-2 gap-1 flex">
+        <button
+          className="border border-cyan-500"
+          onClick={event => {
+            event.stopPropagation();
+            console.log(event)
+          }}
+        >
+          edit
+        </button>
+
+        <button
+          className="border border-cyan-500"
+          onClick={e => console.log(e)}
+        >
+          delete
+        </button>
+      </div>
+
+
+
+
+      <div className={`rounded-full mb-2 h-[50px] w-[50px] bg-red-500 flex items-center justify-center text-white font-bold`}>
         {getInitials(first_name, last_name)}
       </div>
 

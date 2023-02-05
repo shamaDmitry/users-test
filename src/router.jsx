@@ -7,6 +7,7 @@ import Page_404 from "./Pages/Page_404";
 import Users from "./Pages/Users";
 import UserDetails from "./Pages/UserDetails";
 import BasicLayout from "./Layouts/BasicLayout";
+import UserEdit from "./Pages/UserEdit";
 
 let router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ let router = createBrowserRouter([
       {
         path: "/users/:id",
         element: <UserDetails />,
+      },
+      {
+        path: "/users/:id/edit",
+        element: <UserEdit />,
       },
     ]
   },
