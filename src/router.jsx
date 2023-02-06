@@ -1,6 +1,8 @@
 import {
   createBrowserRouter,
-} from "react-router-dom";
+  createRoutesFromElements,
+  Route
+} from 'react-router-dom';
 
 import Home from "./Pages/Home";
 import Page_404 from "./Pages/Page_404";
@@ -9,34 +11,17 @@ import UserDetails from "./Pages/UserDetails";
 import BasicLayout from "./Layouts/BasicLayout";
 import UserEdit from "./Pages/UserEdit";
 
-let router = createBrowserRouter([
-  {
-    path: "/",
-    element: <BasicLayout />,
-    children: [
-      {
-        path: "/home",
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "/users",
-        element: <Users />,
-      },
-      {
-        path: "/users/:id",
-        element: <UserDetails />,
-      },
-      {
-        path: "/users/:id/edit",
-        element: <UserEdit />,
-      },
-    ]
-  },
-  {
-    path: "*",
-    element: <Page_404 />,
-  },
-]);
+let router = createBrowserRouter(createRoutesFromElements(
+  <Route>
+    <Route path="/" element={<BasicLayout />}>
+      <Route index element={<Home />} />
+      <Route path="users" element={<Users />} />
+      <Route path="users/:id" element={<UserDetails />} />
+      <Route path="users/:id/edit" element={<UserEdit />} />
+    </Route>
+
+    <Route path="*" element={<Page_404 />} />
+  </Route>
+));
 
 export default router;

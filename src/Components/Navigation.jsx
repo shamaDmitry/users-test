@@ -4,7 +4,7 @@ const Navigation = () => {
   const menuItems = [
     {
       title: 'Home',
-      to: '/home'
+      to: '/'
     },
     {
       title: 'Users',
