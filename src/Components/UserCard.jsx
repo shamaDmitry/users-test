@@ -16,7 +16,10 @@ const UserCard = ({ data }) => {
 
   const handleUserEdit = (userData) => (event) => {
     event.stopPropagation()
-    console.log(userData);
+
+    navigate(`/users/${userData._id}/edit`, {
+      state: userData
+    });
   }
 
   const handleUserDelete = (userData) => (event) => {
