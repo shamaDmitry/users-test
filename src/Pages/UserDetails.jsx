@@ -9,10 +9,9 @@ import moment from 'moment/moment';
 const UserDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
   let query = encodeURIComponent(`*[_type == "user" && _id == "${id}"]`);
-
   const { data, error, isLoading } = useSWR(`${API_URL}?query=${query}`, fetcher)
+
   const backButton = (
     <button
       className="border px-4 py-1 rounded-md text-sm font-bold capitalize"
@@ -45,10 +44,6 @@ const UserDetails = () => {
       _updatedAt,
       _type
     } = user;
-
-    console.log(
-      
-    )
 
     return (
       <div className="container mx-auto">

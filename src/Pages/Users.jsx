@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '../helpers/fetcher';
 import { API_URL } from '../helpers/API'
@@ -9,10 +9,18 @@ import FilterSelect from '../Components/FilterSelect';
 const Users = () => {
   let query = encodeURIComponent('*[_type == "user"]');
   const { data, error, isLoading } = useSWR(`${API_URL}?query=${query}`, fetcher)
-  const filterUser = (data) => (event) => {
-    console.log('filter', data)
-    console.log('event', event)
+  const [filteredData, setFilteredData] = useState([]);
+
+  const filterUser = (users) => (event) => {
+    setFilteredData(prevState => {
+      return users.filter(user => {
+        if (event.target.value === 'All') return user
+        return user.position === event.target.value
+      })
+    })
   }
+
+  if (error) return <h1>{error.message}</h1>
 
   return (
     <div className="container mx-auto">
@@ -20,12 +28,13 @@ const Users = () => {
 
       <div className="flex justify-end my-6">
         <FilterSelect
-          onFilter={filterUser(data?.result)}
+          entryData={data?.result}
+          onFilter={filterUser}
         />
       </div>
 
       <div className="grid grid-flow-row-dense grid-cols-4 grid-rows-4 gap-4 pb-[50px]">
-        {data?.result.map((user, index) => {
+        {filteredData.map((user, index) => {
           return (
             <UserCard
               key={user._id}
