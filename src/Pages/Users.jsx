@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '../helpers/fetcher';
 import { API_URL } from '../helpers/API'
@@ -8,8 +8,12 @@ import FilterSelect from '../Components/FilterSelect';
 
 const Users = () => {
   let query = encodeURIComponent('*[_type == "user"]');
-  const { data, error, isLoading } = useSWR(`${API_URL}?query=${query}`, fetcher)
+  const { data, error, isLoading } = useSWR(`${API_URL}?query=${query}`, fetcher);
   const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    setFilteredData(data?.result || [])
+  }, [data])
 
   const filterUser = (users) => (event) => {
     setFilteredData(prevState => {
