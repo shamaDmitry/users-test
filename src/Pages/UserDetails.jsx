@@ -1,27 +1,20 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import useSWR from 'swr';
-import { fetcher } from '../helpers/fetcher';
-import { API_URL } from '../helpers/API'
-import { useNavigate, useParams } from 'react-router-dom';
+import {fetcher} from '../helpers/fetcher';
+import {API_URL} from '../helpers/constants.js'
+import {useNavigate, useParams} from 'react-router-dom';
 import Spinner from '../Components/Spinner';
 import moment from 'moment/moment';
+import BackButton from './../Components/BackButton'
 
 const UserDetails = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
+  const {id} = useParams();
   let query = encodeURIComponent(`*[_type == "user" && _id == "${id}"]`);
-  const { data, error, isLoading } = useSWR(`${API_URL}?query=${query}`, fetcher)
+  const {data, error, isLoading} = useSWR(`${API_URL}?query=${query}`, fetcher)
 
-  const backButton = (
-    <button
-      className="border px-4 py-1 rounded-md text-sm font-bold capitalize"
-      onClick={() => navigate('/users')}
-    >
-      back
-    </button>
-  );
-
-  if (isLoading) return <Spinner className="animate-spin w-7 mx-auto text-blue-900" />
+  if (isLoading) {
+    return <Spinner className="animate-spin w-7 mx-auto text-blue-900"/>
+  }
 
   if (error) {
     return (
@@ -29,7 +22,7 @@ const UserDetails = () => {
         <p className="text-red-600 font-medium">
           {error.message}
         </p>
-        {backButton}
+        <BackButton/>
       </div>
     )
   }
@@ -47,7 +40,7 @@ const UserDetails = () => {
 
     return (
       <div className="container mx-auto">
-        {backButton}
+        <BackButton/>
 
         <h1 className="text-lg font-medium my-2">
           User details:

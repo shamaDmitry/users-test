@@ -1,51 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import useSWR from 'swr';
-import { fetcher } from '../helpers/fetcher';
-import { API_URL } from '../helpers/API'
-import Spinner from '../Components/Spinner';
-import UserCard from '../Components/UserCard';
-import FilterSelect from '../Components/FilterSelect';
+import React, {useState} from 'react';
+import PositionsFilter from '../Components/PositionsFilter';
+import UsersList from '../Components/UsersList';
 
 const Users = () => {
-  let query = encodeURIComponent('*[_type == "user"]');
-  const { data, error, isLoading } = useSWR(`${API_URL}?query=${query}`, fetcher);
-  const [filteredData, setFilteredData] = useState([]);
-
-  useEffect(() => {
-    setFilteredData(data?.result || [])
-  }, [data])
-
-  const filterUser = (users) => (event) => {
-    setFilteredData(prevState => {
-      return users.filter(user => {
-        if (event.target.value === 'All') return user
-        return user.position === event.target.value
-      })
-    })
-  }
-
-  if (error) return <h1>{error.message}</h1>
+  const [query, setQuery] = useState(encodeURIComponent(`*[_type == "user"]`));
+  const prepareFilterQuery = () => (event) => {
+    const isResetFilters = event.target.value === 'All';
+    let query = '*[_type == "user"]';
+    if (!isResetFilters) {
+      query = `*[_type == "user" && position match '${event.target.value}']`;
+    }
+    setQuery(encodeURIComponent(query));
+  };
 
   return (
     <div className="container mx-auto">
-      {isLoading ? <Spinner className="animate-spin w-7 mx-auto text-blue-900" /> : null}
-
       <div className="flex justify-end my-6">
-        <FilterSelect
-          entryData={data?.result}
-          onFilter={filterUser}
-        />
+        <PositionsFilter onFilter={prepareFilterQuery}/>
       </div>
 
       <div className="grid grid-flow-row-dense grid-cols-4 grid-rows-4 gap-4 pb-[50px]">
-        {filteredData.map((user, index) => {
-          return (
-            <UserCard
-              key={user._id}
-              data={user}
-            />
-          )
-        })}
+        <UsersList query={query}/>
       </div>
     </div>
   );
