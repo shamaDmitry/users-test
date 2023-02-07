@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '../helpers/fetcher';
-import { API_URL } from '../helpers/API'
+import { API_URL } from '../helpers/constants'
 import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../Components/Spinner';
 import moment from 'moment/moment';

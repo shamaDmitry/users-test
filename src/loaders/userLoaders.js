@@ -1,5 +1,5 @@
 import { fetcher } from '../helpers/fetcher';
-import { API_URL } from '../helpers/API';
+import { API_URL } from '../helpers/constants';
 
 export const userEditLoader = async ({ params }) => {
   let query = encodeURIComponent(`*[_type == "user" && _id == "${params.id}"]`);
