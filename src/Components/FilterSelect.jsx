@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '../helpers/fetcher';
 import Spinner from './Spinner';
-const selectClasses = `block border bg-transparent text-right focus:outline-none p-2 w-[250px] hover:border-black cursor-pointer transition-colors`;
+const selectClasses = `block border bg-transparent text-right focus:outline-none p-1 w-[250px] hover:border-black cursor-pointer transition-colors`;
 
 const FilterSelect = memo(({ label = 'Filter', entryData, onFilter }) => {
   const {
