@@ -4,15 +4,13 @@ import { fetcher } from '../helpers/fetcher';
 import Spinner from './Spinner';
 const selectClasses = `block border bg-transparent text-right focus:outline-none p-1 w-[250px] hover:border-black cursor-pointer transition-colors`;
 
-const FilterSelect = memo(({ label = 'Filter', entryData, onFilter }) => {
+const FilterSelect = memo(({ label = 'Filter', dataForFilter, onFilter }) => {
   const {
     objectTofilter,
     fieldToFilter
-  } = entryData;
+  } = dataForFilter;
 
   const menuItemsQuery = encodeURIComponent(`*[_type == "${objectTofilter}"].${fieldToFilter}`);
-
-  // console.log(menuItemsQuery);
 
   const { data: positions, error, isLoading } = useSWR(`?query=${menuItemsQuery}`, fetcher);
 
