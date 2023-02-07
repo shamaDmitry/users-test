@@ -5,6 +5,7 @@ import { API_URL } from '../helpers/API'
 import Spinner from '../Components/Spinner';
 import UserCard from '../Components/UserCard';
 import FilterSelect from '../Components/FilterSelect';
+import { Link } from 'react-router-dom';
 
 const Users = () => {
   let query = encodeURIComponent('*[_type == "user"]');
@@ -31,6 +32,10 @@ const Users = () => {
       {isLoading ? <Spinner className="animate-spin w-7 mx-auto text-blue-900" /> : null}
 
       <div className="flex justify-end my-6">
+        <Link to={'/users/create'} className="mr-auto border py-1 px-4 capitalize font-medium text-lg hover:bg-black hover:text-white transition-colors">
+          create
+        </Link>
+
         <FilterSelect
           entryData={data?.result}
           onFilter={filterUser}

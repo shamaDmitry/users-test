@@ -1,21 +1,29 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLoaderData } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 
-const UserEdit = () => {
-  const location = useLocation();
+const UserForm = () => {
   const navigate = useNavigate();
-  console.log(location.state)
+  const { mode, data: initData } = useLoaderData();
+  const [userData, setUserData] = useState(...initData)
+  console.log(userData);
   let inputClass = `w-full shadow transition-all border px-2 py-1 outline-none hover:border-zinc-600`
 
   return (
     <section className="mb-10">
+      <pre>
+        {JSON.stringify(userData)}
+      </pre>
+
       <div className="container mx-auto">
         <h1 className="font-medium text-2xl mb-4 flex gap-2">
-          <button className="hover:opacity-50" onClick={e => navigate('/users', {replace: true})}>
+          <button className="hover:opacity-50" onClick={e => navigate('/users', { replace: true })}>
             <FaArrowLeft />
           </button>
-          Edit user:
+
+          <span className="capitalize">
+            {mode === 'edit' ? 'Edit' : 'Create'}
+          </span> user:
         </h1>
 
         <div className="mb-4">
@@ -23,9 +31,11 @@ const UserEdit = () => {
             First Name:
           </label>
           <input
+            value={mode === 'edit' ? userData.first_name : ''}
             type="text"
             placeholder="First Name"
             className={inputClass}
+            onChange={e => setUserData(prevState => ({ ...prevState, first_name: e.target.value }))}
           />
         </div>
 
@@ -61,9 +71,13 @@ const UserEdit = () => {
             <option value="1">User</option>
           </select>
         </div>
+
+        <button className="mr-auto border py-1 px-4 capitalize font-medium text-lg hover:bg-black hover:text-white transition-colors">
+          save
+        </button>
       </div>
     </section>
   );
 }
 
-export default UserEdit;
+export default UserForm;
