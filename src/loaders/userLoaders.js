@@ -7,13 +7,13 @@ export const userEditLoader = async ({ params }) => {
 
   return {
     mode: 'edit',
-    data: res.result
+    data: res.result[0]
   }
 }
 
 export const userCreateLoader = () => {
   return {
     mode: 'create',
-    data: [{}]
+    data: {}
   }
 }

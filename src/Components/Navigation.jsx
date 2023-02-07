@@ -13,7 +13,7 @@ const Navigation = () => {
   ];
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4">
       <nav className="flex py-4 items-center border-b mb-4">
         {
           menuItems.map((item, index) => {

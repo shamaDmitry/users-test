@@ -1,9 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import useSWR from 'swr';
-import { fetcher } from '../helpers/fetcher';
-import { API_URL } from '../helpers/constants'
-import Spinner from '../Components/Spinner';
-import UserCard from '../Components/Users/UserCard';
+import React, { useState } from 'react';
 import FilterSelect from '../Components/FilterSelect';
 import { Link } from 'react-router-dom';
 import UsersList from '../Components/Users/UsersList';
@@ -11,7 +6,7 @@ import UsersList from '../Components/Users/UsersList';
 const Users = () => {
   const [query, setQuery] = useState(encodeURIComponent(`*[_type == "user"]`));
   const dataForFilter = { objectTofilter: 'user', fieldToFilter: 'position' };
-  
+
   const prepareFilterQuery = (data) => (event) => {
     const { objectTofilter, fieldToFilter } = data;
     const isResetFilters = event.target.value === 'All';
@@ -25,7 +20,7 @@ const Users = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4">
       <Link
         to={'/users/create'}
         className="mr-auto border py-2 leading-none px-4 uppercase font-medium text-sm hover:bg-black hover:text-white transition-colors"
