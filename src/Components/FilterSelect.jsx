@@ -12,7 +12,7 @@ const FilterSelect = memo(({ label = 'Filter', dataForFilter, onFilter }) => {
 
   const menuItemsQuery = encodeURIComponent(`*[_type == "${objectTofilter}"].${fieldToFilter}`);
 
-  const { data: positions, error, isLoading } = useSWR(`?query=${menuItemsQuery}`, fetcher);
+  const { data: positions, error, isLoading } = useSWR(`/query/production?query=${menuItemsQuery}`, fetcher);
 
   if (isLoading) {
     return <div className={selectClasses}>

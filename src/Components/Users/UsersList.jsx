@@ -5,10 +5,10 @@ import Spinner from '../Spinner';
 import UserCard from './UserCard';
 
 const UsersList = ({ query }) => {
-  const { data: users, error, isLoading } = useSWR(`?query=${query}`, fetcher);
+  const { data: users, error, isLoading } = useSWR(`/query/production?query=${query}`, fetcher);
 
   if (isLoading) {
-    return <Spinner className="animate-spin w-7 mx-auto text-blue-900" />
+    return <Spinner className="w-7 mx-auto text-blue-900" />
   }
 
   if (error) return <h1>{error.message}</h1>

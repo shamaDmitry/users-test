@@ -5,12 +5,13 @@ import { API_URL } from '../helpers/constants'
 import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../Components/Spinner';
 import moment from 'moment/moment';
+import { userByIdQuery } from '../helpers/queries';
 
 const UserDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  let query = encodeURIComponent(`*[_type == "user" && _id == "${id}"]`);
-  const { data, error, isLoading } = useSWR(`${API_URL}?query=${query}`, fetcher)
+  let query = encodeURIComponent(userByIdQuery(id));
+  const { data, error, isLoading } = useSWR(`${API_URL}/query/production?query=${query}`, fetcher)
 
   const backButton = (
     <button

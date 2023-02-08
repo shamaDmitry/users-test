@@ -36,7 +36,7 @@ const Users = () => {
         />
       </div>
 
-      <div className="grid grid-flow-row-dense grid-cols-4 grid-rows-4 gap-4 pb-[50px]">
+      <div className="grid grid-flow-row-dense grid-cols-4 grid-rows-2 gap-4 pb-[50px]">
         <UsersList query={query} />
       </div>
     </div>

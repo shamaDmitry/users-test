@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLoaderData } from 'react-router-dom';
 import { getUserPositionDropdownList } from '../services/userService';
 import { FaArrowLeft } from 'react-icons/fa';
+import Spinner from '../Components/Spinner';
+
+import { _axios } from '../helpers/fetcher';
 
 const UserForm = () => {
   const navigate = useNavigate();
   const { mode, data: initData } = useLoaderData();
-  const [positionDropdownItems, setPositionDropdownItems] = useState([])
+  const [positionDropdownItems, setPositionDropdownItems] = useState([]);
+  const [isSaving, setIsSaving] = useState(false);
   const [userData, setUserData] = useState({
     first_name: '',
     last_name: '',
@@ -17,13 +21,33 @@ const UserForm = () => {
     getUserPositionDropdownList().then(res => setPositionDropdownItems(res.result));
   }, [])
 
-  let inputClass = `w-full shadow transition-all border px-2 py-1 outline-none hover:border-zinc-600`
+  let inputClass = `w-full shadow bg-white transition-all border px-2 py-1 outline-none hover:border-zinc-600`
 
   const handleUserSave = (data) => (event) => {
-    console.log(event);
+    setIsSaving(true);
+
+    const { first_name, last_name, position } = userData;
+    const body = {
+      "mutations": [
+        {
+          "createOrReplace": {
+            "_type": "user",
+            first_name,
+            last_name,
+            position
+          }
+        },
+      ]
+    }
+
+    _axios.post('/mutate/production', JSON.stringify(body))
+      .then(res => {
+        setIsSaving(false);
+        navigate('/users');
+      })
   }
 
-  const handleChange = (data) => (event) => {
+  const handleChange = () => (event) => {
     setUserData(prevState => {
       return {
         ...prevState,
@@ -34,7 +58,7 @@ const UserForm = () => {
 
   return (
     <section className="mb-10">
-      <div className="container mx-auto px-4">
+      <div className="container max-w-xl mx-auto px-4">
         <h1 className="font-medium text-2xl mb-4 flex gap-2">
           <button className="hover:opacity-50" onClick={e => navigate('/users', { replace: true })}>
             <FaArrowLeft />
@@ -55,7 +79,6 @@ const UserForm = () => {
             placeholder="First Name"
             name="first_name"
             className={inputClass}
-            // onChange={e => setUserData(prevState => ({ ...prevState, first_name: e.target.value }))}
             onChange={handleChange()}
           />
         </div>
@@ -90,7 +113,8 @@ const UserForm = () => {
         </div>
 
         <button
-          className="mr-auto
+          className="my-4
+            min-h-[38px]
             border
             py-1
             px-4
@@ -107,7 +131,7 @@ const UserForm = () => {
           onClick={handleUserSave()}
           disabled={!Object.values(userData).every(value => value)}
         >
-          save
+          {isSaving ? <Spinner className="w-4 mx-auto" /> : 'save'}
         </button>
       </div>
     </section>

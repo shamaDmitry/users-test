@@ -1,13 +1,14 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
+import { _axios } from '../../helpers/fetcher';
 
 const UserCard = ({ data }) => {
   const { first_name, last_name, position } = data;
   const navigate = useNavigate();
 
   const getInitials = useCallback((first, last) => {
-    return `${first.slice(0, 1)}${last.slice(0, 1)}`
+    return `${first.slice(0, 1)}${last.slice(0, 1)}`.toUpperCase()
   }, [first_name, last_name]);
 
   const handleCardClick = (user) => (event) => {
@@ -22,9 +23,21 @@ const UserCard = ({ data }) => {
     });
   }
 
-  const handleUserDelete = (userData) => (event) => {
+  const handleUserDelete = (userId) => (event) => {
     event.stopPropagation()
-    console.log(userData);
+    console.log(userId);
+
+    _axios.post('/mutate/production', JSON.stringify(
+      {
+        "mutations": [
+          {
+            "delete": {
+              "id": userId
+            }
+          }
+        ]
+      }
+    )).then(res => console.log(res))
   }
 
   return (
@@ -42,7 +55,7 @@ const UserCard = ({ data }) => {
 
         <button
           className="p-1 text-zinc-500 hover:text-zinc-900"
-          onClick={handleUserDelete(data)}
+          onClick={handleUserDelete(data._id)}
         >
           <FaTrashAlt />
         </button>

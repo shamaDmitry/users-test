@@ -3,7 +3,7 @@ import BasicLayout from '../Layouts/BasicLayout'
 
 const Home = () => {
   return (
-    <div className='container mx-auto'>
+    <div className='container mx-auto px-4'>
       Home
     </div>
   );

@@ -3,7 +3,7 @@ import { API_URL } from '../helpers/constants';
 
 export const userEditLoader = async ({ params }) => {
   let query = encodeURIComponent(`*[_type == "user" && _id == "${params.id}"]`);
-  const res = await fetcher(`${API_URL}?query=${query}`)
+  const res = await fetcher(`${API_URL}/query/production?query=${query}`)
 
   return {
     mode: 'edit',

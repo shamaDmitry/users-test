@@ -3,5 +3,5 @@ import { fetcher } from '../helpers/fetcher';
 import { usersPositionQuery } from '../helpers/queries';
 
 export const getUserPositionDropdownList = async () => {
-  return await fetcher(`${API_URL}?query=${usersPositionQuery}`);
+  return await fetcher(`${API_URL}/query/production?query=${usersPositionQuery}`);
 }
