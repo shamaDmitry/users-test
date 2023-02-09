@@ -7,7 +7,6 @@ import {
   userByPositionQuery
 } from '../helpers/queries';
 
-
 const Users = () => {
   const [query, setQuery] = useState(encodeURIComponent(allUsersQuery));
 
@@ -24,14 +23,14 @@ const Users = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <Link
-        to={'/users/create'}
-        className="mr-auto border py-2 leading-none px-4 uppercase font-medium text-sm hover:bg-black hover:text-white transition-colors"
-      >
-        create
-      </Link>
-
       <div className="flex justify-end gap-4 my-6">
+        <Link
+          to={'/users/create'}
+          className="mr-auto self-end border py-2 leading-none px-4 uppercase font-medium text-sm hover:bg-black hover:text-white transition-colors"
+        >
+          create
+        </Link>
+
         <PositionFilterSelect
           label="Position"
           onFilter={prepareFilterQuery()}

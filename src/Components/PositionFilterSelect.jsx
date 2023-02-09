@@ -7,9 +7,7 @@ import { usersPositionQuery } from '../helpers/queries';
 const selectClasses = `block border bg-transparent text-right focus:outline-none p-1 w-[250px] hover:border-black cursor-pointer transition-colors`;
 
 const PositionFilterSelect = memo(({ label = 'Filter', onFilter }) => {
-  const menuItemsQuery = encodeURIComponent(usersPositionQuery);
-
-  const { data: positions, error, isLoading } = useSWR(`/query/production?query=${menuItemsQuery}`, fetcher);
+  const { data: positions, error, isLoading } = useSWR(`/query/production?query=${encodeURIComponent(usersPositionQuery)}`, fetcher);
 
   if (isLoading) {
     return <div className={selectClasses}>
@@ -18,11 +16,6 @@ const PositionFilterSelect = memo(({ label = 'Filter', onFilter }) => {
   }
 
   if (error) return <h1>{error.message}</h1>
-
-  let positionsList = [
-    'All',
-    ...new Set(positions.result)
-  ];
 
   return (
     <div className="flex flex-col justify-end">
@@ -34,8 +27,10 @@ const PositionFilterSelect = memo(({ label = 'Filter', onFilter }) => {
         className={selectClasses}
         onChange={onFilter}
       >
-        {positionsList.map((item, index) => {
-          return <option key={index} value={item}>{item}</option>
+        <option value="All">All</option>
+        
+        {positions.result.map(item => {
+          return <option key={item._id} value={item._id}>{item.position}</option>
         })}
       </select>
     </div>

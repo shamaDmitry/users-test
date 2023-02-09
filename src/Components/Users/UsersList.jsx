@@ -13,6 +13,8 @@ const UsersList = ({ query }) => {
 
   if (error) return <h1>{error.message}</h1>
 
+  if(!users.result.length) return <p className="font-semibold">nothing is here</p>
+  
   return (
     <>
       {users.result.map((user) => {

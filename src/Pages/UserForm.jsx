@@ -9,6 +9,7 @@ import { _axios } from '../helpers/fetcher';
 const UserForm = () => {
   const navigate = useNavigate();
   const { mode, data: initData } = useLoaderData();
+
   const [positionDropdownItems, setPositionDropdownItems] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
   const [userData, setUserData] = useState({
@@ -18,23 +19,40 @@ const UserForm = () => {
   });
 
   useEffect(() => {
+    mode === 'edit' ? setUserData(prevState => {
+      return {
+        ...prevState,
+        ...initData,
+        position: initData.position._ref
+      }
+    }) : null
+
     getUserPositionDropdownList().then(res => setPositionDropdownItems(res.result));
   }, [])
 
   let inputClass = `w-full shadow bg-white transition-all border px-2 py-1 outline-none hover:border-zinc-600`
 
-  const handleUserSave = (data) => (event) => {
+  const handleUserSave = () => (event) => {
     setIsSaving(true);
 
-    const { first_name, last_name, position } = userData;
+    const {
+      _id,
+      first_name,
+      last_name,
+      position
+    } = userData;
+
     const body = {
       "mutations": [
         {
           "createOrReplace": {
+            "_id": mode === 'edit' ? _id : null,
             "_type": "user",
             first_name,
             last_name,
-            position
+            'position': {
+              _ref: position
+            }
           }
         },
       ]
@@ -105,10 +123,14 @@ const UserForm = () => {
             className={inputClass}
             name="position"
             onChange={handleChange()}
-            defaultValue={'default'}
+            value={userData.position || ''}
           >
-            <option value='default' disabled>select</option>
-            {positionDropdownItems.map((option, index) => <option key={index} value={option}>{option}</option>)}
+            <option value='' disabled>select</option>
+            {positionDropdownItems.map(option => {
+              return <option key={option._id} value={option._id}>
+                {option.position}
+              </option>
+            })}
           </select>
         </div>
 
@@ -129,9 +151,9 @@ const UserForm = () => {
             disabled:hover:bg-white
             disabled:hover:cursor-not-allowed"
           onClick={handleUserSave()}
-          disabled={!Object.values(userData).every(value => value)}
+          disabled={!Object.values(userData).every(value => value) || isSaving}
         >
-          {isSaving ? <Spinner className="w-4 mx-auto" /> : 'save'}
+          {isSaving ? <Spinner className="w-4 mx-auto" /> : mode === 'edit' ? 'Update' : 'Save'}
         </button>
       </div>
     </section>

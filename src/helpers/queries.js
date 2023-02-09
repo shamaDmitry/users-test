@@ -5,11 +5,11 @@ export const allUsersQuery = `*[_type == 'user'] | order(last_name desc) {
   'position': position->position
 }`;
 
-export const usersPositionQuery = `*[_type == "position"].position`;
+export const usersPositionQuery = `*[_type == "position"]`;
 
-export const userByIdQuery = (id) => `*[_type == "user" && _id == "${id}"] {...,'position': position->position,}`;
+export const userByIdQuery = (id) => `*[_type == "user" && _id == "${id}"]`;
 
-export const userByPositionQuery = (position) => `*[_type == 'user' && position->position == '${position}'] {
+export const userByPositionQuery = (positionId) => `*[_type == 'user' && position._ref == '${positionId}'] {
   ...,
   'position': position->position
 }`;

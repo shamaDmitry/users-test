@@ -1,8 +1,9 @@
 import { fetcher } from '../helpers/fetcher';
 import { API_URL } from '../helpers/constants';
+import { userByIdQuery } from '../helpers/queries';
 
 export const userEditLoader = async ({ params }) => {
-  let query = encodeURIComponent(`*[_type == "user" && _id == "${params.id}"]`);
+  let query = encodeURIComponent(userByIdQuery(params.id));
   const res = await fetcher(`${API_URL}/query/production?query=${query}`)
 
   return {
@@ -14,6 +15,6 @@ export const userEditLoader = async ({ params }) => {
 export const userCreateLoader = () => {
   return {
     mode: 'create',
-    data: {}
+    data: null
   }
 }
