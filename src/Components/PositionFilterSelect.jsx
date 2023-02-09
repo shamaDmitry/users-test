@@ -2,15 +2,12 @@ import React, { memo, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '../helpers/fetcher';
 import Spinner from './Spinner';
+import { usersPositionQuery } from '../helpers/queries';
+
 const selectClasses = `block border bg-transparent text-right focus:outline-none p-1 w-[250px] hover:border-black cursor-pointer transition-colors`;
 
-const FilterSelect = memo(({ label = 'Filter', dataForFilter, onFilter }) => {
-  const {
-    objectTofilter,
-    fieldToFilter
-  } = dataForFilter;
-
-  const menuItemsQuery = encodeURIComponent(`*[_type == "${objectTofilter}"].${fieldToFilter}`);
+const PositionFilterSelect = memo(({ label = 'Filter', onFilter }) => {
+  const menuItemsQuery = encodeURIComponent(usersPositionQuery);
 
   const { data: positions, error, isLoading } = useSWR(`/query/production?query=${menuItemsQuery}`, fetcher);
 
@@ -45,4 +42,4 @@ const FilterSelect = memo(({ label = 'Filter', dataForFilter, onFilter }) => {
   );
 });
 
-export default FilterSelect;
+export default PositionFilterSelect;

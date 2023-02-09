@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import FilterSelect from '../Components/FilterSelect';
+import PositionFilterSelect from '../Components/PositionFilterSelect';
 import { Link } from 'react-router-dom';
 import UsersList from '../Components/Users/UsersList';
+import {
+  allUsersQuery,
+  userByPositionQuery
+} from '../helpers/queries';
+
 
 const Users = () => {
-  const [query, setQuery] = useState(encodeURIComponent(`*[_type == "user"]`));
-  const dataForFilter = { objectTofilter: 'user', fieldToFilter: 'position' };
+  const [query, setQuery] = useState(encodeURIComponent(allUsersQuery));
 
-  const prepareFilterQuery = (data) => (event) => {
-    const { objectTofilter, fieldToFilter } = data;
+  const prepareFilterQuery = () => (event) => {
     const isResetFilters = event.target.value === 'All';
-    let query = `*[_type == "${objectTofilter}"]`;
+    let query = allUsersQuery;
 
     if (!isResetFilters) {
-      query = `*[_type == "${objectTofilter}" && ${fieldToFilter} match '${event.target.value}']`;
+      query = userByPositionQuery(event.target.value);
     }
 
     setQuery(encodeURIComponent(query));
@@ -29,10 +32,9 @@ const Users = () => {
       </Link>
 
       <div className="flex justify-end gap-4 my-6">
-        <FilterSelect
+        <PositionFilterSelect
           label="Position"
-          dataForFilter={dataForFilter}
-          onFilter={prepareFilterQuery(dataForFilter)}
+          onFilter={prepareFilterQuery()}
         />
       </div>
 
