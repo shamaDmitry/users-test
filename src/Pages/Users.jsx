@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import PositionFilterSelect from '../Components/PositionFilterSelect';
+
 import { Link } from 'react-router-dom';
+
+import PositionFilterSelect from '../Components/PositionFilterSelect';
 import UsersList from '../Components/Users/UsersList';
+
 import {
   allUsersQuery,
   userByPositionQuery
@@ -23,7 +26,7 @@ const Users = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="flex justify-end gap-4 my-6">
+      <div className="justify-end gap-4 my-6 flex-col sm:flex sm:flex-row">
         <Link
           to={'/users/create'}
           className="mr-auto self-end border py-2 leading-none px-4 uppercase font-medium text-sm hover:bg-black hover:text-white transition-colors"
@@ -37,7 +40,7 @@ const Users = () => {
         />
       </div>
 
-      <div className="grid grid-flow-row-dense grid-cols-4 grid-rows-2 gap-4 pb-[50px]">
+      <div className="grid grid-flow-row-dense grid-cols-1 sm:grid-cols-3 md:grid-cols-4 grid-rows-2 gap-4 pb-[50px]">
         <UsersList query={query} />
       </div>
     </div>

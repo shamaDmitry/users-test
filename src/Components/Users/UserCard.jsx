@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import { FaRegEdit, FaTrashAlt } from 'react-icons/fa';
-import { _axios } from '../../helpers/fetcher';
 
-const UserCard = ({ data }) => {
+const UserCard = ({ data, handleOpenModal }) => {
   const { first_name, last_name, position } = data;
   const navigate = useNavigate();
 
@@ -13,7 +12,7 @@ const UserCard = ({ data }) => {
 
   const handleCardClick = (user) => (event) => {
     navigate(`/users/${user._id}`);
-  }
+  };
 
   const handleUserEdit = (userData) => (event) => {
     event.stopPropagation()
@@ -21,51 +20,38 @@ const UserCard = ({ data }) => {
     navigate(`/users/${userData._id}/edit`, {
       state: userData
     });
-  }
+  };
 
-  const handleUserDelete = (userId) => (event) => {
-    event.stopPropagation()
-    console.log(userId);
-
-    _axios.post('/mutate/production', JSON.stringify(
-      {
-        "mutations": [
-          {
-            "delete": {
-              "id": userId
-            }
-          }
-        ]
-      }
-    )).then(res => console.log(res))
-  }
+  // const handleUserDelete = (userId) => (event) => {
+    
+  // };
 
   return (
     <div
-      className="relative border px-4 py-10 inline-flex flex-col items-center cursor-pointer hover:shadow-xl transition-all"
+      className="relative text-center border px-4 py-10 inline-flex flex-col items-center cursor-pointer hover:shadow-xl transition-all"
       onClick={handleCardClick(data)}
     >
-      <div className="absolute top-2 right-2 gap-1 flex">
+      <div className="absolute top-2 right-2 gap-2 flex">
         <button
-          className="p-1 text-zinc-500 hover:text-zinc-900"
+          className="p-2 text-white hover:text-zinc-900 bg-green-500"
           onClick={handleUserEdit(data)}
         >
           <FaRegEdit />
         </button>
 
         <button
-          className="p-1 text-zinc-500 hover:text-zinc-900"
-          onClick={handleUserDelete(data._id)}
+          className="p-2 text-white hover:text-zinc-900 bg-red-500"
+          onClick={handleOpenModal(data._id)}
         >
           <FaTrashAlt />
         </button>
       </div>
 
-      <div className={`rounded-full mb-2 h-[50px] w-[50px] bg-red-500 flex items-center justify-center text-white font-bold`}>
+      <div className={`rounded-full shadow-lg mb-2 h-[50px] w-[50px] bg-slate-500 flex items-center justify-center text-white font-bold`}>
         {getInitials(first_name, last_name)}
       </div>
 
-      <p className="font-bold leading-5 mb-2">
+      <p className="font-bold leading-5 capitalize mb-2">
         {first_name} {last_name}
       </p>
 

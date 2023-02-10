@@ -10,7 +10,11 @@ import { userByIdQuery } from '../helpers/queries';
 const UserDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  let query = encodeURIComponent(userByIdQuery(id));
+  let query = encodeURIComponent(`*[_type == "user" && _id == "${id}"] {
+    ...,
+    'position': position->position
+  }`);
+
   const { data, error, isLoading } = useSWR(`${API_URL}/query/production?query=${query}`, fetcher)
 
   const backButton = (

@@ -4,7 +4,7 @@ import { fetcher } from '../helpers/fetcher';
 import Spinner from './Spinner';
 import { usersPositionQuery } from '../helpers/queries';
 
-const selectClasses = `block border bg-transparent text-right focus:outline-none p-1 w-[250px] hover:border-black cursor-pointer transition-colors`;
+const selectClasses = `block border bg-transparent text-right focus:outline-none p-1 w-full sm:ml-auto sm:w-[250px] hover:border-black cursor-pointer transition-colors`;
 
 const PositionFilterSelect = memo(({ label = 'Filter', onFilter }) => {
   const { data: positions, error, isLoading } = useSWR(`/query/production?query=${encodeURIComponent(usersPositionQuery)}`, fetcher);
