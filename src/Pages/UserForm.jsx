@@ -23,7 +23,7 @@ const UserForm = () => {
       return {
         ...prevState,
         ...initData,
-        position: initData.position._ref
+        position: initData?.position._ref
       }
     }) : null
 

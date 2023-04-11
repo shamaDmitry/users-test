@@ -22,10 +22,6 @@ const UserCard = ({ data, handleOpenModal }) => {
     });
   };
 
-  // const handleUserDelete = (userId) => (event) => {
-    
-  // };
-
   return (
     <div
       className="relative text-center border px-4 py-10 inline-flex flex-col items-center cursor-pointer hover:shadow-xl transition-all"

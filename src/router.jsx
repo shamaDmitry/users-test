@@ -10,13 +10,20 @@ import Users from "./Pages/Users";
 import UserDetails from "./Pages/UserDetails";
 import BasicLayout from "./Layouts/BasicLayout";
 import UserForm from "./Pages/UserForm";
+import Login from './Pages/Login';
+import SignUp from './Pages/Register';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 import { userCreateLoader, userEditLoader } from './loaders/userLoaders';
 
-let router = createBrowserRouter(createRoutesFromElements(
-  <Route>
-    <Route path="/" element={<BasicLayout />}>
-      <Route index element={<Home />} />
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path="/" element={<BasicLayout />}>
+    <Route index element={<Home />} />
+
+    <Route path="login" element={<Login />} />
+    <Route path="register" element={<SignUp />} />
+
+    <Route element={<ProtectedRoute />}>
       <Route path="users" element={<Users />} />
       <Route path="users/:id" element={<UserDetails />} />
       <Route
